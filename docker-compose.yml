@@ -1,0 +1,42 @@
+# Use root/example as user/password credentials
+version: '3.1'
+
+services:
+  mongodb:
+    container_name: "mongo_db"
+    image: mongo
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: admin
+      MONGO_INITDB_ROOT_PASSWORD: password
+      MONGO_INITDB_DATABASE: myarticles
+
+  mongo-express:
+    container_name: "mongo_express"
+    image: mongo-express
+    restart: always
+    ports:
+      - "8085:8085"
+    environment:
+      ME_CONFIG_MONGODB_ADMINUSERNAME: admin
+      ME_CONFIG_MONGODB_ADMINPASSWORD: password
+      ME_CONFIG_MONGODB_URL: mongodb://admin:password@mongo_db:27017/
+      VCAP_APP_HOST: 0.0.0.0
+      VCAP_APP_PORT: 8085
+
+  my-portfolio:
+    build: .
+    expose:
+      - 27017
+    ports:
+      - "8080:8080"
+    environment:
+      USERNAME: jitendratiwari2896
+      PASSWORD: Yr24xb4hcFnRPbKr
+      HOST: my-portfolio-test.joimeff.mongodb.net
+      PRIVATE_IMAGEKIT_KEY: private_G7GPyuoql+CQVCniyPX6QShZqYA=
+      PUBLIC_IMAGEKIT_KEY: public_kzVQ0UISTObd7D4RX5XWYC7ls5Y=
+      IMAGEKIT_URL_ENDPOINT: https://ik.imagekit.io/6l2bjfexf
+      SPRING_PROFILES_ACTIVE: dev
+      DBNAME: portfolio
