@@ -22,4 +22,13 @@ public class GlobalExceptionHandler {
         );
     }
 
+    @ExceptionHandler(ErrorSavingEntityException.class)
+    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+    public ErrorResponseDTO errorSavingEntityExceptionHandler(ErrorSavingEntityException ex) {
+        return new ErrorResponseDTO(
+            HttpStatus.INTERNAL_SERVER_ERROR.value(),
+            new Date(),
+            ex.getMessage()
+        );
+    }
 }

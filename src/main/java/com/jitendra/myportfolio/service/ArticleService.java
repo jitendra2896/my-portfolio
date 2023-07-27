@@ -17,6 +17,8 @@ import org.springframework.stereotype.Service;
 
 import io.imagekit.sdk.models.results.Result;
 
+import static java.util.UUID.randomUUID;
+
 @Service
 public class ArticleService {
 
@@ -35,7 +37,7 @@ public class ArticleService {
                    .filter(articleContent -> articleContent.getKey().equals(ContentType.IMAGE))
                    .forEach(articleContent -> {
                        try {
-                           Result resultContent = ImageHandler.uploadBase64Image(articleContent.getValue(),
+                           Result resultContent = ImageHandler.uploadBase64Image((String)articleContent.getValue(),
                                                                            article.getHeading() + (contentCounter.getAndIncrement()) + ".png");
                            articleContent.setValue(resultContent.getUrl());
                        } catch (Exception e) {
@@ -45,6 +47,7 @@ public class ArticleService {
         } catch (Exception e) {
             throw new RuntimeException(e);
         }
+        article.setId(randomUUID().toString());
         articleRepository.save(article);
     }
 

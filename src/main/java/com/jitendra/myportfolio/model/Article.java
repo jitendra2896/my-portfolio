@@ -1,5 +1,6 @@
 package com.jitendra.myportfolio.model;
 
+import java.util.Date;
 import java.util.List;
 import java.util.UUID;
 
@@ -14,8 +15,8 @@ import lombok.NoArgsConstructor;
 @Data
 @Document("article")
 @AllArgsConstructor
+@NoArgsConstructor
 public class Article {
-
     @Id
     private String id;
 
@@ -29,5 +30,9 @@ public class Article {
 
     private String subtitle;
 
+    private List<String> labels;
+
     private List<ArticleContent> content;
+
+    private Date date;
 }

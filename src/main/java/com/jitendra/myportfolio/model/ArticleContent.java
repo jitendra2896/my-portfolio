@@ -9,5 +9,5 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class ArticleContent {
     private ContentType key;
-    private String value;
+    private Object value;
 }
